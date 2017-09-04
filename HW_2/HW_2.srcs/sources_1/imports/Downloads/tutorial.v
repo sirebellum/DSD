@@ -1,0 +1,17 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Module Name: tutorial
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module led_interface(
+    input [3:0] in,
+     output [3:0] led
+    );
+    
+    assign led[0] = in[0];
+    assign led[1] = in[1];
+    assign led[2] = in[2];
+    assign led[3] = in[3];
+    
+endmodule
