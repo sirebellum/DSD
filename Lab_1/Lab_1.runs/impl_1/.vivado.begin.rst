@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="blued" Host="VENOM" Pid="6340">
+    <Process Command="vivado" Owner="lubuntu" Host="" Pid="5017">
     </Process>
 </ProcessHandle>

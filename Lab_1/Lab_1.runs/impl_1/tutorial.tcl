@@ -42,24 +42,21 @@ proc step_failed { step } {
   close $ch
 }
 
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
 
 start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
-  set_param xicom.use_bs_reader 1
   create_project -in_memory -part xc7a100tcsg324-1
   set_property board_part digilentinc.com:nexys4_ddr:part0:1.1 [current_project]
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
-  set_property webtalk.parent_dir C:/Users/blued/gits/Lab_1/Lab_1.cache/wt [current_project]
-  set_property parent.project_path C:/Users/blued/gits/Lab_1/Lab_1.xpr [current_project]
-  set_property ip_output_repo C:/Users/blued/gits/Lab_1/Lab_1.cache/ip [current_project]
+  set_property webtalk.parent_dir /home/lubuntu/Dev/DSD/Lab_1/Lab_1.cache/wt [current_project]
+  set_property parent.project_path /home/lubuntu/Dev/DSD/Lab_1/Lab_1.xpr [current_project]
+  set_property ip_output_repo /home/lubuntu/Dev/DSD/Lab_1/Lab_1.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
-  add_files -quiet C:/Users/blued/gits/Lab_1/Lab_1.runs/synth_1/tutorial.dcp
-  read_xdc C:/Users/blued/gits/Lab_1/Lab_1.srcs/constrs_1/imports/Downloads/Tutorial_C.xdc
+  add_files -quiet /home/lubuntu/Dev/DSD/Lab_1/Lab_1.runs/synth_1/tutorial.dcp
+  read_xdc /home/lubuntu/Dev/DSD/Lab_1/Lab_1.srcs/constrs_1/imports/Downloads/Tutorial_C.xdc
   link_design -top tutorial -part xc7a100tcsg324-1
   close_msg_db -file init_design.pb
 } RESULT]
@@ -128,24 +125,6 @@ if {$rc} {
   return -code error $RESULT
 } else {
   end_step route_design
-  unset ACTIVE_STEP 
-}
-
-start_step write_bitstream
-set ACTIVE_STEP write_bitstream
-set rc [catch {
-  create_msg_db write_bitstream.pb
-  catch { write_mem_info -force tutorial.mmi }
-  write_bitstream -force tutorial.bit 
-  catch {write_debug_probes -no_partial_ltxfile -quiet -force debug_nets}
-  catch {file copy -force debug_nets.ltx tutorial.ltx}
-  close_msg_db -file write_bitstream.pb
-} RESULT]
-if {$rc} {
-  step_failed write_bitstream
-  return -code error $RESULT
-} else {
-  end_step write_bitstream
   unset ACTIVE_STEP 
 }
 
