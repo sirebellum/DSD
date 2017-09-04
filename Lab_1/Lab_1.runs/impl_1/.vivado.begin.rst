@@ -3,3 +3,8 @@
     <Process Command="vivado" Owner="lubuntu" Host="" Pid="5017">
     </Process>
 </ProcessHandle>
+<?xml version="1.0"?>
+<ProcessHandle Version="1" Minor="0">
+    <Process Command="vivado" Owner="lubuntu" Host="" Pid="2188">
+    </Process>
+</ProcessHandle>

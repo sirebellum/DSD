@@ -607,3 +607,202 @@ INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc
 Running DRC as a precondition to command route_design
 Command: report_drc (run_mandatory_drcs) for: router_checks
 INFO: [DRC 23-27] Running DRC with 3 threads
+report_drc (run_mandatory_drcs) completed successfully
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+
+Starting Routing Task
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 3 CPUs
+Checksum: PlaceDB: 5cad861a ConstDB: 0 ShapeSum: 7a814fba RouteDB: 0
+
+Phase 1 Build RT Design
+Phase 1 Build RT Design | Checksum: 9ac69bf5
+
+Time (s): cpu = 00:00:28 ; elapsed = 00:00:25 . Memory (MB): peak = 2019.008 ; gain = 115.668 ; free physical = 72 ; free virtual = 1162
+
+Phase 2 Router Initialization
+INFO: [Route 35-64] No timing constraints were detected. The router will operate in resource-optimization mode.
+
+Phase 2.1 Fix Topology Constraints
+Phase 2.1 Fix Topology Constraints | Checksum: 9ac69bf5
+
+Time (s): cpu = 00:00:28 ; elapsed = 00:00:25 . Memory (MB): peak = 2029.008 ; gain = 125.668 ; free physical = 78 ; free virtual = 1149
+
+Phase 2.2 Pre Route Cleanup
+Phase 2.2 Pre Route Cleanup | Checksum: 9ac69bf5
+
+Time (s): cpu = 00:00:28 ; elapsed = 00:00:25 . Memory (MB): peak = 2029.008 ; gain = 125.668 ; free physical = 85 ; free virtual = 1149
+ Number of Nodes with overlaps = 0
+Phase 2 Router Initialization | Checksum: 105c1859d
+
+Time (s): cpu = 00:00:28 ; elapsed = 00:00:25 . Memory (MB): peak = 2036.273 ; gain = 132.934 ; free physical = 81 ; free virtual = 1148
+
+Phase 3 Initial Routing
+Phase 3 Initial Routing | Checksum: 1c20323db
+
+Time (s): cpu = 00:00:29 ; elapsed = 00:00:25 . Memory (MB): peak = 2036.273 ; gain = 132.934 ; free physical = 78 ; free virtual = 1146
+
+Phase 4 Rip-up And Reroute
+
+Phase 4.1 Global Iteration 0
+ Number of Nodes with overlaps = 0
+Phase 4.1 Global Iteration 0 | Checksum: 92cbb268
+
+Time (s): cpu = 00:00:29 ; elapsed = 00:00:25 . Memory (MB): peak = 2036.273 ; gain = 132.934 ; free physical = 78 ; free virtual = 1146
+Phase 4 Rip-up And Reroute | Checksum: 92cbb268
+
+Time (s): cpu = 00:00:29 ; elapsed = 00:00:25 . Memory (MB): peak = 2036.273 ; gain = 132.934 ; free physical = 78 ; free virtual = 1146
+
+Phase 5 Delay and Skew Optimization
+Phase 5 Delay and Skew Optimization | Checksum: 92cbb268
+
+Time (s): cpu = 00:00:29 ; elapsed = 00:00:25 . Memory (MB): peak = 2036.273 ; gain = 132.934 ; free physical = 78 ; free virtual = 1146
+
+Phase 6 Post Hold Fix
+
+Phase 6.1 Hold Fix Iter
+Phase 6.1 Hold Fix Iter | Checksum: 92cbb268
+
+Time (s): cpu = 00:00:29 ; elapsed = 00:00:25 . Memory (MB): peak = 2036.273 ; gain = 132.934 ; free physical = 78 ; free virtual = 1146
+Phase 6 Post Hold Fix | Checksum: 92cbb268
+
+Time (s): cpu = 00:00:29 ; elapsed = 00:00:25 . Memory (MB): peak = 2036.273 ; gain = 132.934 ; free physical = 78 ; free virtual = 1146
+
+Phase 7 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0.00596248 %
+  Global Horizontal Routing Utilization  = 0.00191816 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Congestion Report
+North Dir 1x1 Area, Max Cong = 5.40541%, No Congested Regions.
+South Dir 1x1 Area, Max Cong = 10.8108%, No Congested Regions.
+East Dir 1x1 Area, Max Cong = 2.94118%, No Congested Regions.
+West Dir 1x1 Area, Max Cong = 2.94118%, No Congested Regions.
+Phase 7 Route finalize | Checksum: 92cbb268
+
+Time (s): cpu = 00:00:29 ; elapsed = 00:00:26 . Memory (MB): peak = 2036.273 ; gain = 132.934 ; free physical = 78 ; free virtual = 1146
+
+Phase 8 Verifying routed nets
+
+ Verification completed successfully
+Phase 8 Verifying routed nets | Checksum: 92cbb268
+
+Time (s): cpu = 00:00:29 ; elapsed = 00:00:26 . Memory (MB): peak = 2038.273 ; gain = 134.934 ; free physical = 77 ; free virtual = 1145
+
+Phase 9 Depositing Routes
+Phase 9 Depositing Routes | Checksum: f0ee9c7a
+
+Time (s): cpu = 00:00:29 ; elapsed = 00:00:26 . Memory (MB): peak = 2038.273 ; gain = 134.934 ; free physical = 76 ; free virtual = 1145
+INFO: [Route 35-16] Router Completed Successfully
+
+Time (s): cpu = 00:00:29 ; elapsed = 00:00:26 . Memory (MB): peak = 2038.273 ; gain = 134.934 ; free physical = 88 ; free virtual = 1160
+
+Routing Is Done.
+42 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+route_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:27 . Memory (MB): peak = 2052.715 ; gain = 149.375 ; free physical = 77 ; free virtual = 1159
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00.05 ; elapsed = 00:00:00.23 . Memory (MB): peak = 2052.715 ; gain = 0.000 ; free physical = 70 ; free virtual = 1160
+INFO: [Common 17-1381] The checkpoint '/media/sf_gits/DSD/Lab_1/Lab_1.runs/impl_1/tutorial_routed.dcp' has been generated.
+Command: report_drc -file tutorial_drc_routed.rpt -pb tutorial_drc_routed.pb -rpx tutorial_drc_routed.rpx
+INFO: [DRC 23-27] Running DRC with 3 threads
+INFO: [Coretcl 2-168] The results of DRC are in file /media/sf_gits/DSD/Lab_1/Lab_1.runs/impl_1/tutorial_drc_routed.rpt.
+report_drc completed successfully
+Command: report_methodology -file tutorial_methodology_drc_routed.rpt -rpx tutorial_methodology_drc_routed.rpx
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [DRC 23-133] Running Methodology with 3 threads
+INFO: [Coretcl 2-1520] The results of Report Methodology are in file /media/sf_gits/DSD/Lab_1/Lab_1.runs/impl_1/tutorial_methodology_drc_routed.rpt.
+report_methodology completed successfully
+Command: report_power -file tutorial_power_routed.rpt -pb tutorial_power_summary_routed.pb -rpx tutorial_power_routed.rpx
+WARNING: [Power 33-232] No user defined clocks were found in the design!
+Resolution: Please specify clocks using create_clock/create_generated_clock for sequential elements. For pure combinatorial circuits, please specify a virtual clock, otherwise the vectorless estimation might be inaccurate
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+49 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 3 CPUs
+WARNING: [Timing 38-313] There are no user specified timing constraints. Timing constraints are needed for proper timing analysis.
+INFO: [Common 17-206] Exiting Vivado at Mon Sep  4 16:49:31 2017...
+
+*** Running vivado
+    with args -log tutorial.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source tutorial.tcl -notrace
+
+
+****** Vivado v2017.2 (64-bit)
+  **** SW Build 1909853 on Thu Jun 15 18:39:10 MDT 2017
+  **** IP Build 1909766 on Thu Jun 15 19:58:00 MDT 2017
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+
+source tutorial.tcl -notrace
+Command: open_checkpoint tutorial_routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00.04 ; elapsed = 00:00:00.04 . Memory (MB): peak = 1085.062 ; gain = 0.000 ; free physical = 1732 ; free virtual = 4811
+INFO: [Netlist 29-17] Analyzing 8 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2017.2
+INFO: [Device 21-403] Loading part xc7a100tcsg324-1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [/media/sf_gits/DSD/Lab_1/Lab_1.runs/impl_1/.Xil/Vivado-2221-lubuntu-VirtualBox/dcp3/tutorial.xdc]
+Finished Parsing XDC File [/media/sf_gits/DSD/Lab_1/Lab_1.runs/impl_1/.Xil/Vivado-2221-lubuntu-VirtualBox/dcp3/tutorial.xdc]
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.06 . Memory (MB): peak = 1362.867 ; gain = 0.000 ; free physical = 1184 ; free virtual = 4366
+Restored from archive | CPU: 0.020000 secs | Memory: 0.022812 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.06 . Memory (MB): peak = 1362.867 ; gain = 0.000 ; free physical = 1184 ; free virtual = 4366
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2017.2 (64-bit) build 1909853
+open_checkpoint: Time (s): cpu = 00:00:06 ; elapsed = 00:00:11 . Memory (MB): peak = 1362.867 ; gain = 277.805 ; free physical = 1184 ; free virtual = 4366
+Command: write_bitstream -force tutorial.bit
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a100t-csg324'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a100t-csg324'
+Running DRC as a precondition to command write_bitstream
+Command: report_drc (run_mandatory_drcs) for: bitstream_checks
+INFO: [DRC 23-27] Running DRC with 4 threads
+WARNING: [DRC CFGBVS-1] Missing CFGBVS and CONFIG_VOLTAGE Design Properties: Neither the CFGBVS nor CONFIG_VOLTAGE voltage property is set in the current_design.  Configuration bank voltage select (CFGBVS) must be set to VCCO or GND, and CONFIG_VOLTAGE must be set to the correct configuration voltage, in order to determine the I/O voltage support for the pins in bank 0.  It is suggested to specify these either using the 'Edit Device Properties' function in the GUI or directly in the XDC file using the following syntax:
+
+ set_property CFGBVS value1 [current_design]
+ #where value1 is either VCCO or GND
+
+ set_property CONFIG_VOLTAGE value2 [current_design]
+ #where value2 is the voltage provided to configuration bank 0
+
+Refer to the device configuration user guide for more information.
+report_drc (run_mandatory_drcs) completed successfully
+INFO: [Vivado 12-3199] DRC finished with 0 Errors, 1 Warnings
+INFO: [Vivado 12-3200] Please refer to the DRC report (report_drc) for more information.
+INFO: [Project 1-821] Please set project.enableDesignId to be 'true'.
+INFO: [Designutils 20-2272] Running write_bitstream with 4 threads.
+Loading data files...
+Loading site data...
+Loading route data...
+Processing options...
+Creating bitmap...
+Creating bitstream...
+Writing bitstream ./tutorial.bit...
+INFO: [Vivado 12-1842] Bitgen Completed Successfully.
+INFO: [Project 1-120] WebTalk data collection is mandatory when using a WebPACK part without a full Vivado license. To see the specific WebTalk data collected for your design, open the usage_statistics_webtalk.html or usage_statistics_webtalk.xml file in the implementation directory.
+INFO: [Common 17-186] '/media/sf_gits/DSD/Lab_1/Lab_1.runs/impl_1/usage_statistics_webtalk.xml' has been successfully sent to Xilinx on Mon Sep  4 16:55:38 2017. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2017.2/doc/webtalk_introduction.html.
+16 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+write_bitstream completed successfully
+write_bitstream: Time (s): cpu = 00:00:10 ; elapsed = 00:00:13 . Memory (MB): peak = 1795.145 ; gain = 432.277 ; free physical = 1123 ; free virtual = 4326
+INFO: [Common 17-206] Exiting Vivado at Mon Sep  4 16:55:38 2017...
