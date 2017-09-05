@@ -2,8 +2,8 @@
 # Vivado v2017.2 (64-bit)
 # SW Build 1909853 on Thu Jun 15 18:39:10 MDT 2017
 # IP Build 1909766 on Thu Jun 15 19:58:00 MDT 2017
-# Start of session at: Tue Sep  5 11:25:40 2017
-# Process ID: 3109
+# Start of session at: Mon Sep  4 16:54:59 2017
+# Process ID: 2221
 # Current directory: /media/sf_gits/DSD/Lab_1/Lab_1.runs/impl_1
 # Command line: vivado -log tutorial.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source tutorial.tcl -notrace
 # Log file: /media/sf_gits/DSD/Lab_1/Lab_1.runs/impl_1/tutorial.vdi

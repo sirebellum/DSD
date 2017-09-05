@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="synth_1" LaunchPart="xc7a100tcsg324-1" LaunchTime="1504561468">
-  <File Type="PA-TCL" Name="tutorial.tcl"/>
-  <File Type="RDS-RDS" Name="tutorial.vds"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="tutorial_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="tutorial_timing_summary_synth.pb"/>
-  <File Type="RDS-DCP" Name="tutorial.dcp"/>
   <File Type="RDS-UTIL-PB" Name="tutorial_utilization_synth.pb"/>
+  <File Type="RDS-DCP" Name="tutorial.dcp"/>
   <File Type="RDS-UTIL" Name="tutorial_utilization_synth.rpt"/>
   <File Type="RDS-PROPCONSTRS" Name="tutorial_drc_synth.rpt"/>
+  <File Type="RDS-RDS" Name="tutorial.vds"/>
+  <File Type="VDS-TIMING-PB" Name="tutorial_timing_summary_synth.pb"/>
+  <File Type="PA-TCL" Name="tutorial.tcl"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="tutorial_timing_summary_synth.rpt"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PPRDIR/../../../../../media/sf_gits/DSD/Lab_1/Lab_1.srcs/sources_1/imports/Downloads/tutorial.v">
