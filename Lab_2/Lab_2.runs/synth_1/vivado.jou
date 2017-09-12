@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.2 (64-bit)
+# SW Build 1909853 on Thu Jun 15 18:39:10 MDT 2017
+# IP Build 1909766 on Thu Jun 15 19:58:00 MDT 2017
+# Start of session at: Tue Sep 12 11:48:47 2017
+# Process ID: 4359
+# Current directory: /media/sf_gits/DSD/Lab_2/Lab_2.runs/synth_1
+# Command line: vivado -log Mux4.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Mux4.tcl
+# Log file: /media/sf_gits/DSD/Lab_2/Lab_2.runs/synth_1/Mux4.vds
+# Journal file: /media/sf_gits/DSD/Lab_2/Lab_2.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source Mux4.tcl -notrace
