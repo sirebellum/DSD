@@ -11,7 +11,7 @@ wire [1:0] out;
 //Put Your code here
 
 Mux2 m1(Sel_A, In[0], In[1], out[0]);
-Mux2 m2(Sel_B&Sel_A, In[2], In[3], out[1]);
+Mux2 m2(Sel_B & Sel_A, In[2], In[3], out[1]);
 
 Mux2 m3(Sel_B, out[0], out[1], y);
 
