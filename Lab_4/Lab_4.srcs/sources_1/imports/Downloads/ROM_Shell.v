@@ -1,41 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-
-// Company:
- 
-// Engineer: Paul Morton
-
-//
- 
-// Create Date: 10/12/2014 10:50:11 PM
-
-// Design Name: 
-
-// Module Name: ROM
-
-// Project Name:
- 
-// Target Devices: NEXYS-4 Board
-
-// Tool Versions:
-
-// Description: 
-
-//
- 
-// Dependencies:
- 
-//
- 
-// Revision:
-
-// Revision 0.01 - File Created
-// Additional Comments:  A is slide switch 15,14,13,12,11,  LED 7:0 are the outputs
-
-// Outputs are always displayed for the current address in A using LED's 7:0  D is slide switch 7:0
-//////////////////////////////////////////////////////////////////////////////////
-
-
 
 module ROM(
     output [7:0] LED,
@@ -50,9 +13,9 @@ module ROM(
     integer i;
     
     initial begin     //Can make simpler with a for loop 
-        for(i = 0; i <= 31; i=i+1)
+        for(i = 0; i < 32; i=i+1)
         begin
-            Store[i]<=8'b00000000;
+            Store[i] <= 8'b00000000;
         end
     end
 
@@ -64,12 +27,16 @@ assign LED = Store[A];
 always @ (Clear, Load)
 begin
 
-    if (Clear == 1)
+    if (Clear) begin
         Store[A] <= 8'b00000000;
-    else if (Load == 1)
+    end
+    
+    else if (Load & !Clear) begin
         Store[A] <= D;
-    else
-        Store[A] <= Store[A];
+    end
+    
+    else begin
+    end
         
 end
 
