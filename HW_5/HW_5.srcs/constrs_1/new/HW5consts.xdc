@@ -25,3 +25,6 @@ set_property PACKAGE_PIN U17 [get_ports {out[0]}]
 set_property PACKAGE_PIN U14 [get_ports cout]
 
 set_property IOSTANDARD LVCMOS33 [get_ports cout]
+
+set_property IOSTANDARD LVCMOS33 [get_ports cin]
+set_property PACKAGE_PIN P17 [get_ports cin]
