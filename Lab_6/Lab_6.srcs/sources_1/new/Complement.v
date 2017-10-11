@@ -97,45 +97,45 @@ always @ (posedge Clk_1K) begin
     endcase
     end
 
-    else if (SSEG_AN == 8'b11110111) begin
-	case(SW[7:4])
+    else if (SSEG_AN == 8'b11111011) begin
+    case(~SW[3:0])
        4'b0000 : SSEG_CA = 8'b11000000;
-       4'b0001 : SSEG_CA = 8'b10001110;
-       4'b0010 : SSEG_CA = 8'b10000110;
-       4'b0011 : SSEG_CA = 8'b10100001;
-       4'b0100 : SSEG_CA = 8'b11000110;
-       4'b0101 : SSEG_CA = 8'b10000011;
-       4'b0110 : SSEG_CA = 8'b10001000;
-       4'b0111 : SSEG_CA = 8'b10011000;
+       4'b0001 : SSEG_CA = 8'b11111001;
+       4'b0010 : SSEG_CA = 8'b10100100;
+       4'b0011 : SSEG_CA = 8'b10110000;
+       4'b0100 : SSEG_CA = 8'b10011001;
+       4'b0101 : SSEG_CA = 8'b10010010;
+       4'b0110 : SSEG_CA = 8'b10000010;
+       4'b0111 : SSEG_CA = 8'b11111000;
        4'b1000 : SSEG_CA = 8'b10000000;
-       4'b1001 : SSEG_CA = 8'b11111000;
-       4'b1010 : SSEG_CA = 8'b10000010;
-       4'b1011 : SSEG_CA = 8'b10010010;
-       4'b1100 : SSEG_CA = 8'b10011001;
-       4'b1101 : SSEG_CA = 8'b10110000;
-       4'b1110 : SSEG_CA = 8'b10100100;
-       4'b1111 : SSEG_CA = 8'b11111001;
+       4'b1001 : SSEG_CA = 8'b10011000;
+       4'b1010 : SSEG_CA = 8'b10001000;
+       4'b1011 : SSEG_CA = 8'b10000011;
+       4'b1100 : SSEG_CA = 8'b11000110;
+       4'b1101 : SSEG_CA = 8'b10100001;
+       4'b1110 : SSEG_CA = 8'b10000110;
+       4'b1111 : SSEG_CA = 8'b10001110;
     endcase
     end
-
-    else if (SSEG_AN == 8'b11111011) begin
-	case(SW[3:0])
+        
+    else if (SSEG_AN == 8'b11110111) begin
+    case(~SW[7:4])
        4'b0000 : SSEG_CA = 8'b11000000;
-       4'b0001 : SSEG_CA = 8'b10001110;
-       4'b0010 : SSEG_CA = 8'b10000110;
-       4'b0011 : SSEG_CA = 8'b10100001;
-       4'b0100 : SSEG_CA = 8'b11000110;
-       4'b0101 : SSEG_CA = 8'b10000011;
-       4'b0110 : SSEG_CA = 8'b10001000;
-       4'b0111 : SSEG_CA = 8'b10011000;
+       4'b0001 : SSEG_CA = 8'b11111001;
+       4'b0010 : SSEG_CA = 8'b10100100;
+       4'b0011 : SSEG_CA = 8'b10110000;
+       4'b0100 : SSEG_CA = 8'b10011001;
+       4'b0101 : SSEG_CA = 8'b10010010;
+       4'b0110 : SSEG_CA = 8'b10000010;
+       4'b0111 : SSEG_CA = 8'b11111000;
        4'b1000 : SSEG_CA = 8'b10000000;
-       4'b1001 : SSEG_CA = 8'b11111000;
-       4'b1010 : SSEG_CA = 8'b10000010;
-       4'b1011 : SSEG_CA = 8'b10010010;
-       4'b1100 : SSEG_CA = 8'b10011001;
-       4'b1101 : SSEG_CA = 8'b10110000;
-       4'b1110 : SSEG_CA = 8'b10100100;
-       4'b1111 : SSEG_CA = 8'b11111001;
+       4'b1001 : SSEG_CA = 8'b10011000;
+       4'b1010 : SSEG_CA = 8'b10001000;
+       4'b1011 : SSEG_CA = 8'b10000011;
+       4'b1100 : SSEG_CA = 8'b11000110;
+       4'b1101 : SSEG_CA = 8'b10100001;
+       4'b1110 : SSEG_CA = 8'b10000110;
+       4'b1111 : SSEG_CA = 8'b10001110;
     endcase
     end
     
