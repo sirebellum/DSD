@@ -100,6 +100,7 @@ module ROM (
     output Z3);
     
 reg [4:0] rom [31:0];
+reg [4:0] index;
 
 initial begin
     rom[0] = 5'b01101;
@@ -137,11 +138,15 @@ initial begin
     rom[31] = 5'b00000;
 end
 
-assign Z3    = rom[{q1, q0, X3, X2, X1}][4];
-assign Z2    = rom[{q1, q0, X3, X2, X1}][3];
-assign Z1    = rom[{q1, q0, X3, X2, X1}][2];
-assign aplus = rom[{q1, q0, X3, X2, X1}][1];
-assign bplus = rom[{q1, q0, X3, X2, X1}][0];
+always @ (posedge clock) begin
+	index = {q1, q0, X3, X2, X1};
+end
+
+assign Z3    = rom[index][4];
+assign Z2    = rom[index][3];
+assign Z1    = rom[index][2];
+assign aplus = rom[index][1];
+assign bplus = rom[index][0];
 
 endmodule //END ROM
 
@@ -164,8 +169,8 @@ module SM (
 wire aplus, bplus;
 wire CLK_1k;
 
-D_FF ffq1(PBC, aplus, q1);
-D_FF ffq0(PBC, bplus, q0);
+D_FF ffq1(!PBC, aplus, q1);
+D_FF ffq0(!PBC, bplus, q0);
 
 Clock_1k CLK1k(CLK, CLK_1k);
 Display_7seg display7(q1, q0, CLK_1k, SSEG_CA, SSEG_AN);
