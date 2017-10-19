@@ -86,6 +86,10 @@ module Display_7seg(
 endmodule //END DISPLAY MODULE
 
 
+// ROM for state machine //
+
+
+
 // TOP LEVEL MODULE //
 module SM (
 	input CLK,
@@ -111,10 +115,11 @@ D_FF ffq0(PBC, bplus, q0);
 Clock_1k CLK1k(CLK, CLK_1k);
 Display_7seg display7(q1, q0, CLK_1k, SSEG_CA, SSEG_AN);
 
-assign aplus = !q1&!q0&!X1&X2 | !q1&!q0&X1&X2&X3 | !q1&q0&X2 | q1&q0;
-assign bplus = q1&q0 | q1&!X1 | !q1&!q0&X1&!X3 | !q1&!X2;
-assign Z1 = q0 | q1 | X2;
-assign Z2 = !q1 & !q0 & !X2;
-assign Z3 = !q1&!q0&X2&!X1;
+assign aplus = !q1&q0&X2 | !q1&!q0&X2&!X1|!q1&!q0&X2&X1&X3;
+assign bplus = !q1&!q0&!X2 | !q1&!q0&!X3&X2&X1 | q1&!q0&!X1 | !q1&q0&!X2;
+
+assign Z1 = q1&!q0 | !q1&q0;
+assign Z2 = !q1 & q0 & !X2;
+assign Z3 = q1&!q0&!X1;
     
 endmodule
