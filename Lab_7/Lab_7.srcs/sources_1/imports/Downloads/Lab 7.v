@@ -87,8 +87,63 @@ endmodule //END DISPLAY MODULE
 
 
 // ROM for state machine //
+module ROM (
+    input q0,
+    input q1,
+    input X1,
+    input X2,
+    input X3,
+    output aplus,
+    output bplus,
+    output Z1,
+    output Z2,
+    output Z3);
+    
+reg [4:0] rom [31:0];
 
+initial begin
+    rom[0] = 5'b01101;
+    rom[1] = 5'b01101;
+    rom[2] = 5'b10110;
+    rom[3] = 5'b00101;
+    rom[4] = 5'b01101;
+    rom[5] = 5'b01101;
+    rom[6] = 5'b10110;
+    rom[7] = 5'b00110;
+    rom[8] = 5'b00101;
+    rom[9] = 5'b00101;
+    rom[10] = 5'b00110;
+    rom[11] = 5'b00110;
+    rom[12] = 5'b00101;
+    rom[13] = 5'b00101;
+    rom[14] = 5'b00110;
+    rom[15] = 5'b00101;
+    rom[16] = 5'b00101;
+    rom[17] = 5'b00000;
+    rom[18] = 5'b00101;
+    rom[19] = 5'b00000;
+    rom[20] = 5'b00101;
+    rom[21] = 5'b00000;
+    rom[22] = 5'b00101;
+    rom[23] = 5'b00000;
+    
+    rom[24] = 5'b00000;
+    rom[25] = 5'b00000;
+    rom[26] = 5'b00000;
+    rom[27] = 5'b00000;
+    rom[28] = 5'b00000;
+    rom[29] = 5'b00000;
+    rom[30] = 5'b00000;
+    rom[31] = 5'b00000;
+end
 
+assign Z3    = rom[{q1, q0, X3, X2, X1}][4];
+assign Z2    = rom[{q1, q0, X3, X2, X1}][3];
+assign Z1    = rom[{q1, q0, X3, X2, X1}][2];
+assign aplus = rom[{q1, q0, X3, X2, X1}][1];
+assign bplus = rom[{q1, q0, X3, X2, X1}][0];
+
+endmodule //END ROM
 
 // TOP LEVEL MODULE //
 module SM (
@@ -115,11 +170,16 @@ D_FF ffq0(PBC, bplus, q0);
 Clock_1k CLK1k(CLK, CLK_1k);
 Display_7seg display7(q1, q0, CLK_1k, SSEG_CA, SSEG_AN);
 
+/*
 assign aplus = !q1&q0&X2 | !q1&!q0&X2&!X1|!q1&!q0&X2&X1&X3;
 assign bplus = !q1&!q0&!X2 | !q1&!q0&!X3&X2&X1 | q1&!q0&!X1 | !q1&q0&!X2;
 
 assign Z1 = q1&!q0 | !q1&q0;
 assign Z2 = !q1 & q0 & !X2;
 assign Z3 = q1&!q0&!X1;
+*/
+
+ROM rom(q0, q1, X1, X2, X3, aplus, bplus, Z1, Z2, Z3);
+
     
 endmodule
