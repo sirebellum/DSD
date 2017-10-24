@@ -93,6 +93,7 @@ module ROM (
     input X1,
     input X2,
     input X3,
+    input clock,
     output aplus,
     output bplus,
     output Z1,
@@ -184,7 +185,7 @@ assign Z2 = !q1 & q0 & !X2;
 assign Z3 = q1&!q0&!X1;
 */
 
-ROM rom(q0, q1, X1, X2, X3, aplus, bplus, Z1, Z2, Z3);
+ROM rom(q0, q1, X1, X2, X3, CLK, aplus, bplus, Z1, Z2, Z3);
 
     
 endmodule
