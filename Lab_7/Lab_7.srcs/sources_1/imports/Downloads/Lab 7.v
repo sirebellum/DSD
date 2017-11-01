@@ -182,7 +182,7 @@ assign bplus = !q1&!q0&!X2 | !q1&!q0&!X3&X2&X1 | q1&!q0&!X1 | !q1&q0&!X2;
 
 assign Z1 = q1&!q0 | !q1&q0;
 assign Z2 = !q1 & q0 & !X2;
-assign Z3 = q1&!q0&!X1;
+assign Z3 = q1&!q0&!X1&X2;
 
 
 //ROM rom(q0, q1, X1, X2, X3,PBC, aplus, bplus, Z1, Z2, Z3);
