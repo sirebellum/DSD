@@ -3,10 +3,10 @@
 <!--                                                         -->
 <!-- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="32" Path="/home/lubuntu/gits/DSD/Lab_7/Lab_7.xpr">
+<Project Version="7" Minor="32" Path="/home/lubuntu/gits/DSD/Lab_8/Lab_8.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="ee0f1d2124694ee28d5f50b5ed104bf6"/>
+    <Option Name="Id" Val="b886b65364cc4ad89aa40dff835373fd"/>
     <Option Name="Part" Val="xc7a100tcsg324-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -55,10 +55,8 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
       <Filter Type="Srcs"/>
-      <File Path="$PSRCDIR/sources_1/imports/Downloads/Lab 7.v">
+      <File Path="$PSRCDIR/sources_1/new/top.v">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/Lab 7.v"/>
-          <Attr Name="ImportTime" Val="1508364893"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -66,16 +64,16 @@
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="SM"/>
+        <Option Name="TopModule" Val="nonseq_count"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
       </Config>
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
       <Filter Type="Constrs"/>
-      <File Path="$PSRCDIR/constrs_1/imports/Downloads/SM_C.xdc">
+      <File Path="$PSRCDIR/constrs_1/imports/sf_Downloads/Lab8_C.xdc">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../Downloads/SM_C.xdc"/>
-          <Attr Name="ImportTime" Val="1508362424"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../../../../../media/sf_Downloads/Lab8_C.xdc"/>
+          <Attr Name="ImportTime" Val="1509564776"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
         </FileInfo>
@@ -85,10 +83,9 @@
       </Config>
     </FileSet>
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
-      <Filter Type="Srcs"/>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="SM"/>
+        <Option Name="TopModule" Val="nonseq_count"/>
         <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
         <Option Name="TransportPathDelay" Val="0"/>
@@ -121,16 +118,18 @@
   <Runs Version="1" Minor="10">
     <Run Id="synth_1" Type="Ft3:Synth" SrcSet="sources_1" Part="xc7a100tcsg324-1" ConstrsSet="constrs_1" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2017"/>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2017">
+          <Desc>Vivado Synthesis Defaults</Desc>
+        </StratHandle>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
       <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2017">
-        <ReportConfig Name="synth_1_synth_report_utilization_0" Spec="report_utilization" RunStep="synth_design" ReportFile="SM_utilization_synth.rpt" Version="1" Minor="0">
+        <ReportConfig Name="synth_1_synth_report_utilization_0" Spec="report_utilization" RunStep="synth_design" ReportFile="nonseq_count_utilization_synth.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
-          <ReportConfigOutputOption Name="pb" Type="string" Value="SM_utilization_synth.pb"/>
+          <ReportConfigOutputOption Name="pb" Type="string" Value="nonseq_count_utilization_synth.pb"/>
         </ReportConfig>
-        <ReportConfig Name="synth_1_synth_synthesis_report_0" Spec="" RunStep="synth_design" ReportFile="SM.vds">
+        <ReportConfig Name="synth_1_synth_synthesis_report_0" Spec="" RunStep="synth_design" ReportFile="nonseq_count.vds">
           <ReportConfigOption Name="dummy_option" Type="string"/>
         </ReportConfig>
       </ReportStrategy>
@@ -138,7 +137,9 @@
     </Run>
     <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7a100tcsg324-1" ConstrsSet="constrs_1" Description="Default settings for Implementation." WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2017"/>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2017">
+          <Desc>Default settings for Implementation.</Desc>
+        </StratHandle>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -155,10 +156,10 @@
           <ReportConfigOption Name="dummy_option" Type="string"/>
           <ReportConfigOutputOption Name="rpx" Type="string" Value=""/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_opt_report_drc_0" Spec="report_drc" RunStep="opt_design" ReportFile="SM_drc_opted.rpt" Version="1" Minor="0">
+        <ReportConfig Name="impl_1_opt_report_drc_0" Spec="report_drc" RunStep="opt_design" ReportFile="nonseq_count_drc_opted.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
-          <ReportConfigOutputOption Name="pb" Type="string" Value="SM_drc_opted.pb"/>
-          <ReportConfigOutputOption Name="rpx" Type="string" Value="SM_drc_opted.rpx"/>
+          <ReportConfigOutputOption Name="pb" Type="string" Value="nonseq_count_drc_opted.pb"/>
+          <ReportConfigOutputOption Name="rpx" Type="string" Value="nonseq_count_drc_opted.rpx"/>
         </ReportConfig>
         <ReportConfig Name="impl_1_opt_report_timing_summary_0" Spec="report_timing_summary" RunStep="opt_design" Version="1" Minor="0" IsDisabled="true">
           <ReportConfigOption Name="dummy_option" Type="string"/>
@@ -168,14 +169,14 @@
           <ReportConfigOption Name="dummy_option" Type="string"/>
           <ReportConfigOutputOption Name="rpx" Type="string" Value=""/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_place_report_io_0" Spec="report_io" RunStep="place_design" ReportFile="SM_io_placed.rpt" Version="1" Minor="0">
+        <ReportConfig Name="impl_1_place_report_io_0" Spec="report_io" RunStep="place_design" ReportFile="nonseq_count_io_placed.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_place_report_utilization_0" Spec="report_utilization" RunStep="place_design" ReportFile="SM_utilization_placed.rpt" Version="1" Minor="0">
+        <ReportConfig Name="impl_1_place_report_utilization_0" Spec="report_utilization" RunStep="place_design" ReportFile="nonseq_count_utilization_placed.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
-          <ReportConfigOutputOption Name="pb" Type="string" Value="SM_utilization_placed.pb"/>
+          <ReportConfigOutputOption Name="pb" Type="string" Value="nonseq_count_utilization_placed.pb"/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_place_report_control_sets_0" Spec="report_control_sets" RunStep="place_design" ReportFile="SM_control_sets_placed.rpt" Version="1" Minor="0">
+        <ReportConfig Name="impl_1_place_report_control_sets_0" Spec="report_control_sets" RunStep="place_design" ReportFile="nonseq_count_control_sets_placed.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
         </ReportConfig>
         <ReportConfig Name="impl_1_place_report_incremental_reuse_0" Spec="report_incremental_reuse" RunStep="place_design" Version="1" Minor="0" IsDisabled="true">
@@ -196,36 +197,36 @@
           <ReportConfigOption Name="dummy_option" Type="string"/>
           <ReportConfigOutputOption Name="rpx" Type="string" Value=""/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_route_report_drc_0" Spec="report_drc" RunStep="route_design" ReportFile="SM_drc_routed.rpt" Version="1" Minor="0">
+        <ReportConfig Name="impl_1_route_report_drc_0" Spec="report_drc" RunStep="route_design" ReportFile="nonseq_count_drc_routed.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
-          <ReportConfigOutputOption Name="pb" Type="string" Value="SM_drc_routed.pb"/>
-          <ReportConfigOutputOption Name="rpx" Type="string" Value="SM_drc_routed.rpx"/>
+          <ReportConfigOutputOption Name="pb" Type="string" Value="nonseq_count_drc_routed.pb"/>
+          <ReportConfigOutputOption Name="rpx" Type="string" Value="nonseq_count_drc_routed.rpx"/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_route_report_methodology_0" Spec="report_methodology" RunStep="route_design" ReportFile="SM_methodology_drc_routed.rpt" Version="1" Minor="0">
+        <ReportConfig Name="impl_1_route_report_methodology_0" Spec="report_methodology" RunStep="route_design" ReportFile="nonseq_count_methodology_drc_routed.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
-          <ReportConfigOutputOption Name="pb" Type="string" Value="SM_methodology_drc_routed.pb"/>
-          <ReportConfigOutputOption Name="rpx" Type="string" Value="SM_methodology_drc_routed.rpx"/>
+          <ReportConfigOutputOption Name="pb" Type="string" Value="nonseq_count_methodology_drc_routed.pb"/>
+          <ReportConfigOutputOption Name="rpx" Type="string" Value="nonseq_count_methodology_drc_routed.rpx"/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_route_report_power_0" Spec="report_power" RunStep="route_design" ReportFile="SM_power_routed.rpt" Version="1" Minor="0">
+        <ReportConfig Name="impl_1_route_report_power_0" Spec="report_power" RunStep="route_design" ReportFile="nonseq_count_power_routed.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
-          <ReportConfigOutputOption Name="pb" Type="string" Value="SM_power_summary_routed.pb"/>
-          <ReportConfigOutputOption Name="rpx" Type="string" Value="SM_power_routed.rpx"/>
+          <ReportConfigOutputOption Name="pb" Type="string" Value="nonseq_count_power_summary_routed.pb"/>
+          <ReportConfigOutputOption Name="rpx" Type="string" Value="nonseq_count_power_routed.rpx"/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_route_report_route_status_0" Spec="report_route_status" RunStep="route_design" ReportFile="SM_route_status.rpt" Version="1" Minor="0">
+        <ReportConfig Name="impl_1_route_report_route_status_0" Spec="report_route_status" RunStep="route_design" ReportFile="nonseq_count_route_status.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
-          <ReportConfigOutputOption Name="pb" Type="string" Value="SM_route_status.pb"/>
+          <ReportConfigOutputOption Name="pb" Type="string" Value="nonseq_count_route_status.pb"/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_route_report_timing_summary_0" Spec="report_timing_summary" RunStep="route_design" ReportFile="SM_timing_summary_routed.rpt" Version="1" Minor="0">
+        <ReportConfig Name="impl_1_route_report_timing_summary_0" Spec="report_timing_summary" RunStep="route_design" ReportFile="nonseq_count_timing_summary_routed.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
-          <ReportConfigOutputOption Name="rpx" Type="string" Value="SM_timing_summary_routed.rpx"/>
+          <ReportConfigOutputOption Name="rpx" Type="string" Value="nonseq_count_timing_summary_routed.rpx"/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_route_report_incremental_reuse_0" Spec="report_incremental_reuse" RunStep="route_design" ReportFile="SM_incremental_reuse_routed.rpt" Version="1" Minor="0">
-          <ReportConfigOption Name="dummy_option" Type="string"/>
-        </ReportConfig>
-        <ReportConfig Name="impl_1_route_report_clock_utilization_0" Spec="report_clock_utilization" RunStep="route_design" ReportFile="SM_clock_utilization_routed.rpt" Version="1" Minor="0">
+        <ReportConfig Name="impl_1_route_report_incremental_reuse_0" Spec="report_incremental_reuse" RunStep="route_design" ReportFile="nonseq_count_incremental_reuse_routed.rpt" Version="1" Minor="0">
           <ReportConfigOption Name="dummy_option" Type="string"/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_route_implementation_log_0" Spec="" RunStep="route_design" ReportFile="SM.vdi">
+        <ReportConfig Name="impl_1_route_report_clock_utilization_0" Spec="report_clock_utilization" RunStep="route_design" ReportFile="nonseq_count_clock_utilization_routed.rpt" Version="1" Minor="0">
+          <ReportConfigOption Name="dummy_option" Type="string"/>
+        </ReportConfig>
+        <ReportConfig Name="impl_1_route_implementation_log_0" Spec="" RunStep="route_design" ReportFile="nonseq_count.vdi">
           <ReportConfigOption Name="dummy_option" Type="string"/>
         </ReportConfig>
         <ReportConfig Name="impl_1_post_route_phys_opt_report_timing_summary_0" Spec="report_timing_summary" RunStep="post_route_phys_opt_design" Version="1" Minor="0">
@@ -235,7 +236,7 @@
         <ReportConfig Name="impl_1_bitstream_report_webtalk_0" Spec="" RunStep="write_bitstream" ReportFile="usage_statistics_webtalk.html">
           <ReportConfigOption Name="dummy_option" Type="string"/>
         </ReportConfig>
-        <ReportConfig Name="impl_1_bitstream_implementation_log_0" Spec="" RunStep="write_bitstream" ReportFile="SM.vdi">
+        <ReportConfig Name="impl_1_bitstream_implementation_log_0" Spec="" RunStep="write_bitstream" ReportFile="nonseq_count.vdi">
           <ReportConfigOption Name="dummy_option" Type="string"/>
         </ReportConfig>
       </ReportStrategy>
