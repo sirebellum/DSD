@@ -9,7 +9,7 @@ module nonseq_count(
     
     // This code slows down the 100 Mhz clock to a 1 second period.
     reg A, B, C, D;
-    wire [3:0]SW;
+    wire [3:0]State;
     reg [31:0] counter_out;
     reg Clk_Slow;
         initial begin
@@ -27,27 +27,47 @@ module nonseq_count(
     
     initial begin
         A <= 1'b1;
-        B <= 1'b0;
+        B <= 1'b1;
         C <= 1'b0;
-        D <= 1'b1;
+        D <= 1'b0;
     end
     
-    assign SW = {A,B,C,D};
+    assign State = {A,B,C,D};
     //
     always @(posedge Clk_Slow) begin
-    A <= (A&!B&!C&D)+(A&B&!C&!D)+(!A&!B&C&D)+(!A&B&C&!D);
-    B <= (A&!B&!C&D)+(!Start&A&B&!C&!D)+(A&!B&C&!D)+(!A&B&!C)+(!A&!B&C&D)+(A&B&C&D);
-    C <= (A&B&!C&!D&Start)+(!A&B&!C&D)+(!A&B&C&D)+(!A&!B&C&D)+(A&B&C&D);
-    D <= (!A&B&!C&!D)+(!A&B&!C&D)+(!A&B&C&D)+(!A&!B&C&D)+(!A&B&C&!D);
+    A <= (!A & !B & C & D)|
+		 (!A & B & C & !D)|
+		 (A & !B & !C & D)|
+		 (A & B & !C & !D & Start);
+		 
+    B <= (A & !B & C & !D)|
+		 (!A & B & !C & !D)|
+		 (!A & B & !C & D)|
+		 (!A & B & !C & D)|
+		 (!A & !B & C & D)|
+		 (A & B & C & D)|
+		 (A & !B & !C & D);
+		 
+    C <= (A & B & !C & !D & Start)|
+		 (!A & B & !C & D)|
+		 (!A & B & C & D)|
+		 (!A & !B & C & D)|
+		 (A & B & C & D);
+		 
+    D <= (!A & B & !C & !D)|
+		 (!A & B & !C & D)|
+		 (!A & B & C & D)|
+		 (!A & !B & C & D)|
+		 (!A & B & C & !D);
     end
     //
-    assign LED = SW;
+    assign LED = State;
     
-    always @(SW) begin
+    always @(State) begin
     SSEG_AN = 8'b11111110;
     
     //LED = SW;
-    case (SW)
+    case (State)
     4'b1100: begin
             SSEG_CA <= 8'b11000110;
            // A <= 1'b1;
