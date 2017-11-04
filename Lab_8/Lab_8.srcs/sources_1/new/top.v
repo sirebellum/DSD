@@ -33,7 +33,7 @@ module nonseq_count(
     end
     
     assign State = {A,B,C,D};
-    //
+
     always @(posedge Clk_Slow) begin
     A <= (!A & !B & C & D)|
 		 (!A & B & C & !D)|
@@ -61,76 +61,39 @@ module nonseq_count(
 		 (!A & !B & C & D)|
 		 (!A & B & C & !D);
     end
-    //
+ 
     assign LED = State;
     
     always @(State) begin
     SSEG_AN = 8'b11111110;
     
-    //LED = SW;
     case (State)
     4'b1100: begin
             SSEG_CA <= 8'b11000110;
-           // A <= 1'b1;
-            //B <= 1'b0;
-           // C <= 1'b1;
-            //D <= 1'b0;
           end
     4'b1010: begin
             SSEG_CA <= 8'b10001000;
-            //A <= 1'b0;
-            //B <= 1'b1;
-            //C <= 1'b0;
-            //D <= 1'b0;
             end
     4'b0100: begin
             SSEG_CA <= 8'b10011001;
-            //A <= 1'b0;
-            //B <= 1'b1;
-            //C <= 1'b0;
-            //D <= 1'b1;
             end
     4'b0101: begin
             SSEG_CA <= 8'b10010010;
-            //A <= 1'b0;
-            //B <= 1'b1;
-            //C <= 1'b1;
-            //D <= 1'b1;
             end
     4'b0111: begin
             SSEG_CA <= 8'b11111000;
-            //A <= 1'b0;
-            //B <= 1'b0;
-            //C <= 1'b1;
-            //D <= 1'b1;
             end
     4'b0011: begin
             SSEG_CA <= 8'b10110000;
-            //A <= 1'b1;
-            //B <= 1'b1;
-            //C <= 1'b1;
-            //D <= 1'b1;
             end
     4'b1111: begin
             SSEG_CA <= 8'b10001110;
-            //A <= 1'b0;
-            //B <= 1'b1;
-            //C <= 1'b1;
-            //D <= 1'b0;
             end
     4'b0110: begin
             SSEG_CA <= 8'b10000010;
-            //A <= 1'b1;
-            //B <= 1'b0;
-            //C <= 1'b0;
-            //D <= 1'b1;
             end
     4'b1001: begin
             SSEG_CA <= 8'b10010000;
-            //A <= 1'b1;
-            //B <= 1'b1;
-            //C <= 1'b0;
-            //D <= 1'b0;
             end        
     endcase                                                              
     end    
