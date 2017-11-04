@@ -38,15 +38,16 @@ module nonseq_count(
     A <= (!A & !B & C & D)|
 		 (!A & B & C & !D)|
 		 (A & !B & !C & D)|
-		 (A & B & !C & !D & Start);
+		 (A & B & !C & !D & Start)|
+		 (A & B & !C & !D & !Start);
 		 
     B <= (A & !B & C & !D)|
 		 (!A & B & !C & !D)|
 		 (!A & B & !C & D)|
-		 (!A & B & !C & D)|
 		 (!A & !B & C & D)|
 		 (A & B & C & D)|
-		 (A & !B & !C & D);
+		 (A & !B & !C & D)|
+		 (A & B & !C & !D & !Start);
 		 
     C <= (A & B & !C & !D & Start)|
 		 (!A & B & !C & D)|
