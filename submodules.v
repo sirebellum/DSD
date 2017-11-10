@@ -68,4 +68,3 @@ module Display_7seg(
 	end
 	
 endmodule //END DISPLAY MODULE
-
