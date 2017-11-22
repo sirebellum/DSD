@@ -1,3 +1,23 @@
+/* Cathode dictionary:
+0 : SSEG_CA = 8'b11000000;
+1 : SSEG_CA = 8'b11111001;
+2 : SSEG_CA = 8'b10100100;
+3 : SSEG_CA = 8'b10110000;
+4 : SSEG_CA = 8'b10011001;
+5 : SSEG_CA = 8'b10010010;
+6 : SSEG_CA = 8'b10000010;
+7 : SSEG_CA = 8'b11111000;
+8 : SSEG_CA = 8'b10000000;
+9 : SSEG_CA = 8'b10011000;
+A : SSEG_CA = 8'b10001000;
+b : SSEG_CA = 8'b10000011;
+C : SSEG_CA = 8'b11000110;
+d : SSEG_CA = 8'b10100001;
+E : SSEG_CA = 8'b10000110;
+F : SSEG_CA = 8'b10001110;
+q : SSEG_CA = 8'b10011000;
+*/
+
 // 7 SEGMENT STATE DISPLAY MODULE //
 module Display_7seg(
     input [7:0] digit1, //Leftmost digit
