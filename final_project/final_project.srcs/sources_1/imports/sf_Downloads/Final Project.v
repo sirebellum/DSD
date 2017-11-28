@@ -13,45 +13,37 @@ module game(
 	wire CLK_Slow;
 	Clock_Slow CLKSLOW(CLK_1K, CLK_Slow);
 	
-	wire [3:0] randy;
-	//random RANDOM(CLK_1K, CLK, CLK_Slow, randy);
-
-//	
-	reg [3:0] randos[3:0];
+	wire [3:0] randgen[3:0];
+	reg [3:0] randstore[3:0];
+	random RANDOM(CLK_Slow, CLK, randgen[0], randgen[1], randgen[2], randgen[3]);
 
 	reg [7:0] digit1, digit2, digit3, digit4, digit6, digit7, digit8;
 	Display_7seg display(digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, CLK_1K, SSEG_CA, SSEG_AN);
 	
 	reg [2:0] state;
-//
 	
 	reg [1:0] guessNum; //increments after each guess
 	reg [3:0] guessDig; //The number pulled from the switches used for guessing
 	reg [1:0] randNum;  //current random number being guessed
 	
-	reg goodGuess;
-	reg badGuess;	
 	reg [3:0] i;
 		
+
     initial begin
-//
 	state = 3'b000;
-//
 	
     guessNum = 2'b00;
     randNum = 2'b00;
-    goodGuess = 1'b0;
-    badGuess = 1'b0;
     end
     
 	always @ (posedge CLK) begin
 		case (state)
 		
 			3'b000: begin //Initial state, wait for button, scroll and proceed once pressed
-				randos[0] <= randy;
-				randos[1] <= randy;
-				randos[2] <= randy;
-				randos[3] <= randy;
+				randstore[0] = randgen[0];
+				randstore[1] = randgen[1];
+				randstore[2] = randgen[2];
+				randstore[3] = randgen[3];
 				
 				if (BTNC) begin
 					//SCROLL RANDOM NUMBERS//
@@ -68,7 +60,7 @@ module game(
 					end
 					guessNum = guessNum + 1;
 				
-					if (guessDig == randos[randNum])
+					if (guessDig == randstore[randNum])
 						state = 3'b100;
 					else
 						state = 3'b010;
@@ -80,7 +72,7 @@ module game(
 				//SCROLL VALUE TO NEXT EMPTY SLOT USING guessNum//
 				
 				// led for higher or lower
-				if (guessNum < randos[randNum]) begin
+				if (guessNum < randstore[randNum]) begin
 					LED[0] = 1;
 					LED[15] = 0;
 				end
@@ -131,8 +123,32 @@ module game(
 endmodule // END TOP MODULE //
 
 
-// RANDOM NUMBER MODULE //
 
+// RANDOM NUMBER MODULE //
+module random(
+	input CLK_Slow, CLK,
+	output reg [3:0]Randy0,
+	output reg [3:0]Randy1,
+	output reg [3:0]Randy2,
+	output reg [3:0]Randy3
+	);
+		
+	reg [31:0]counter;
+	
+	always @(posedge CLK) begin
+	counter <= counter + 32'h00A03001;
+	end
+	
+	always @(posedge CLK_Slow) begin
+
+        Randy0 = {counter[2],counter[17],1'b1,counter[3]};
+        Randy1 = {counter[6],counter[7],counter[19],1'b0};
+        Randy2 = {counter[5],1'b1,counter[13],counter[20]};
+        Randy3 = {counter[8],counter[11],counter[16],counter[12]};
+
+	end
+	
+endmodule // END RANDOM NUMBER MODULE //
 
 
 /* Cathode dictionary:
