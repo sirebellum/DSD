@@ -13,17 +13,26 @@ module game(
 	wire CLK_Slow;
 	Clock_Slow CLKSLOW(CLK_1K, CLK_Slow);
 	
-	wire [3:0] randgen[3:0];
-	reg [3:0] randstore[3:0];
+	wire [3:0] randgen[3:0]; //Picks up output from random generator
+	reg [3:0] randstore[3:0]; //Stores output from random generator for a session
 	random RANDOM(CLK_Slow, CLK, randgen[0], randgen[1], randgen[2], randgen[3]);
 
-	reg [7:0] digit1, digit2, digit3, digit4, digit6, digit7, digit8;
-	Display_7seg display(digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, CLK_1K, SSEG_CA, SSEG_AN);
+	reg [7:0] digits[7:0];
+	Display_7seg display(digits[0], digits[1], digits[2], digits[3], digits[4], digits[5], digits[6], digits[7], CLK_1K, SSEG_CA, SSEG_AN);
+	
+	wire [7:0] rand_cat[3:0]; //Converted random numbers (to cathode compatible)
+	convert converter0(CLK, randstore[0], rand_cat[0]);
+	convert converter1(CLK, randstore[1], rand_cat[1]);
+	convert converter2(CLK, randstore[2], rand_cat[2]);
+	convert converter3(CLK, randstore[3], rand_cat[3]);
+	
 	
 	reg [2:0] state;
 	
 	reg [1:0] guessNum; //increments after each guess
 	reg [3:0] guessDig; //The number pulled from the switches used for guessing
+	wire [7:0] guess_cat; //guessDig in cathode form
+	convert guessconvert(CLK, guessDig, guess_cat);
 	reg [1:0] randNum;  //current random number being guessed
 	
 	reg [3:0] i;
@@ -47,6 +56,10 @@ module game(
 				
 				if (BTNC) begin
 					state = 3'b001;
+					digits[4] = rand_cat[0];
+					digits[5] = rand_cat[1];
+					digits[6] = rand_cat[2];
+					digits[7] = rand_cat[3];
 				end
 			end
 			
@@ -69,6 +82,7 @@ module game(
 			3'b010: begin //Wrong guess
 			
 				//SCROLL VALUE TO NEXT EMPTY SLOT USING guessNum//
+				digits[3] = guess_cat;
 				
 				// led for higher or lower
 				if (guessNum < randstore[randNum]) begin
@@ -121,40 +135,34 @@ module game(
 	
 endmodule // END TOP MODULE //
 
-module random(//Convert 4bit to Cathode compatible 8bit
+module convert(//Convert 4bit to Cathode compatible 8bit
 	input CLK,
-	input reg [3:0]val0,
-	input reg [3:0]val1,
-	input reg [3:0]val2,
-	input reg [3:0]val3,
-	output reg [7:0]out0,
-	output reg [7:0]out1,
-	output reg [7:0]out2,
-	output reg [7:0]out3,
+	input [3:0]val,
+	output reg [7:0]out
 	);
 	
-	always @ (posedge CLK)
+	always @ (posedge CLK) begin
 	
-	case (val0)
-	   4'b0000 : out0 = 8'b11000000;
-	   4'b0001 : out0 = 8'b11111001;
-	   4'b0010 : out0 = 8'b10100100;
-	   4'b0011 : out0 = 8'b10110000;
-	   4'b0100 : out0 = 8'b10011001;
-	   4'b0101 : out0 = 8'b10010010;
-	   4'b0110 : out0 = 8'b10000010;
-	   4'b0111 : out0 = 8'b11111000;
-	   4'b1000 : out0 = 8'b10000000;
-	   4'b1001 : out0 = 8'b10011000;
-	   4'b1010 : out0 = 8'b10001000;
-	   4'b1011 : out0 = 8'b10000011;
-	   4'b1100 : out0 = 8'b11000110;
-	   4'b1101 : out0 = 8'b10100001;
-	   4'b1110 : out0 = 8'b10000110;
-	   4'b1111 : out0 = 8'b10001110;
-	endcase
-	
-	
+	   case (val)
+	       4'b0000 : out = 8'b11000000;
+	       4'b0001 : out = 8'b11111001;
+	       4'b0010 : out = 8'b10100100;
+	       4'b0011 : out = 8'b10110000;
+	       4'b0100 : out = 8'b10011001;
+	       4'b0101 : out = 8'b10010010;
+	       4'b0110 : out = 8'b10000010;
+	       4'b0111 : out = 8'b11111000;
+	       4'b1000 : out = 8'b10000000;
+	       4'b1001 : out = 8'b10011000;
+	       4'b1010 : out = 8'b10001000;
+	       4'b1011 : out = 8'b10000011;
+	       4'b1100 : out = 8'b11000110;
+	       4'b1101 : out = 8'b10100001;
+	       4'b1110 : out = 8'b10000110;
+	       4'b1111 : out = 8'b10001110;
+	   endcase
+              
+    end
 	
 endmodule
 
