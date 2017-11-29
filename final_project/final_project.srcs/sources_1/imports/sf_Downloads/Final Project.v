@@ -46,7 +46,6 @@ module game(
 				randstore[3] = randgen[3];
 				
 				if (BTNC) begin
-					//SCROLL RANDOM NUMBERS//
 					state = 3'b001;
 				end
 			end
@@ -122,7 +121,42 @@ module game(
 	
 endmodule // END TOP MODULE //
 
-
+module random(//Convert 4bit to Cathode compatible 8bit
+	input CLK,
+	input reg [3:0]val0,
+	input reg [3:0]val1,
+	input reg [3:0]val2,
+	input reg [3:0]val3,
+	output reg [7:0]out0,
+	output reg [7:0]out1,
+	output reg [7:0]out2,
+	output reg [7:0]out3,
+	);
+	
+	always @ (posedge CLK)
+	
+	case (val0)
+	   4'b0000 : out0 = 8'b11000000;
+	   4'b0001 : out0 = 8'b11111001;
+	   4'b0010 : out0 = 8'b10100100;
+	   4'b0011 : out0 = 8'b10110000;
+	   4'b0100 : out0 = 8'b10011001;
+	   4'b0101 : out0 = 8'b10010010;
+	   4'b0110 : out0 = 8'b10000010;
+	   4'b0111 : out0 = 8'b11111000;
+	   4'b1000 : out0 = 8'b10000000;
+	   4'b1001 : out0 = 8'b10011000;
+	   4'b1010 : out0 = 8'b10001000;
+	   4'b1011 : out0 = 8'b10000011;
+	   4'b1100 : out0 = 8'b11000110;
+	   4'b1101 : out0 = 8'b10100001;
+	   4'b1110 : out0 = 8'b10000110;
+	   4'b1111 : out0 = 8'b10001110;
+	endcase
+	
+	
+	
+endmodule
 
 // RANDOM NUMBER MODULE //
 module random(
