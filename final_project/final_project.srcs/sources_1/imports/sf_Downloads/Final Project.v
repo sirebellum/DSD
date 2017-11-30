@@ -65,7 +65,7 @@ module game(
 			
 			3'b001: begin //Waiting for and checking player guesses
 				if (BTND) begin
-					for (i=0 ; i <= 4'b1111 ; i = i + 4'b0001) begin
+					for (i = 4'b0000 ; i < 4'b1111 ; i = i + 4'b0001) begin
 						if(SW[i]) 
 						guessDig = i;
 						//ERROR Handling would be nice here
