@@ -1,3 +1,4 @@
+`timescale 1ms/1ns
 // TOP MODULE //
 module game(
 	input BTNC, BTND, CLK,
@@ -21,28 +22,28 @@ module game(
 	Display_7seg display(digits[0], digits[1], digits[2], digits[3], digits[4], digits[5], digits[6], digits[7], CLK_1K, SSEG_CA, SSEG_AN);
 	
 	wire [7:0] rand_cat[3:0]; //Converted random numbers (to cathode compatible)
-	convert converter0(CLK, randstore[0], rand_cat[0]);
-	convert converter1(CLK, randstore[1], rand_cat[1]);
-	convert converter2(CLK, randstore[2], rand_cat[2]);
-	convert converter3(CLK, randstore[3], rand_cat[3]);
+	convert converter0(randstore[0], rand_cat[0]);
+	convert converter1(randstore[1], rand_cat[1]);
+	convert converter2(randstore[2], rand_cat[2]);
+	convert converter3(randstore[3], rand_cat[3]);
 	
 	
 	reg [2:0] state;
 	
-	reg [1:0] guessNum; //increments after each guess
+	reg [2:0] guessNum; //increments after each guess
 	reg [3:0] guessDig; //The number pulled from the switches used for guessing
+    reg [3:0] last_guessDig;
 	wire [7:0] guess_cat; //guessDig in cathode form
-	convert guessconvert(CLK, guessDig, guess_cat);
-	reg [1:0] randNum;  //current random number being guessed
+	convert guessconvert(guessDig, guess_cat);
+	reg [2:0] randNum;  //current random number being guessed
 	
-	reg [3:0] i;
-		
+	reg [4:0] i;
 
     initial begin
 	state = 3'b000;
 	
-    guessNum = 2'b00;
-    randNum = 2'b00;
+    guessNum = 3'b000;
+    randNum = 3'b000;
     end
     
 	always @ (posedge CLK) begin
@@ -56,21 +57,42 @@ module game(
 				
 				if (BTNC) begin
 					state = 3'b001;
-					digits[4] = rand_cat[0];
-					digits[5] = rand_cat[1];
-					digits[6] = rand_cat[2];
-					digits[7] = rand_cat[3];
+					
+                    digits[0] = rand_cat[0];
+                    digits[1] = rand_cat[1];
+                    digits[2] = rand_cat[2];
+                    digits[3] = rand_cat[3];
+					digits[4] = 8'b11111111;
+                    digits[5] = 8'b11111111;
+                    digits[6] = 8'b11111111;
+                    digits[7] = 8'b11111111;
+
+					
+					digits[0] = #1000 8'b11111111;
+                    digits[1] = 8'b11111111;
+                    digits[2] = 8'b11111111;
+                    digits[3] = 8'b11111111;
+                    digits[4] = rand_cat[0];
+                    digits[5] = rand_cat[1];
+                    digits[6] = rand_cat[2];
+                    digits[7] = rand_cat[3];
+                    
+                    guessNum = 3'b000;
+                    randNum = 3'b000;
+                    
 				end
 			end
 			
 			3'b001: begin //Waiting for and checking player guesses
+				
+				last_guessDig = guessDig;
+				
 				if (BTND) begin
-					for (i = 4'b0000 ; i < 4'b1111 ; i = i + 4'b0001) begin
+					for (i = 5'b00000 ; i < 5'b10000 ; i = i + 5'b00001) begin
 						if(SW[i]) 
-						guessDig = i;
+						  guessDig = i[3:0];
 						//ERROR Handling would be nice here
 					end
-					guessNum = guessNum + 1;
 				
 					if (guessDig == randstore[randNum])
 						state = 3'b100;
@@ -81,11 +103,13 @@ module game(
 			
 			3'b010: begin //Wrong guess
 			
+			    if (guessDig != last_guessDig) //Fix problem with "button jitter" (false positives)
+			        guessNum = guessNum + 3'b001;
 				//SCROLL VALUE TO NEXT EMPTY SLOT USING guessNum//
-				digits[3] = guess_cat;
+				digits[4-guessNum] = guess_cat;
 				
 				// led for higher or lower
-				if (guessNum < randstore[randNum]) begin
+				if (guessDig < randstore[randNum]) begin
 					LED[0] = 1;
 					LED[15] = 0;
 				end
@@ -94,15 +118,19 @@ module game(
 					LED[15] = 1;
 				end //end higher or lower
 				
-				if (guessNum == 4)
+				if (guessNum == 3'b100)
 					state = 3'b011;
 				else
 					state = 3'b001;
+					
 			end
 			
 			3'b011: begin //4 wrong guesses	
 				//SHOW ACTUAL RANDOM NUMBERS IN LOWER 4//
 				//WAIT 3 SECONDS AND CHANGE UPPER 4 TO F000//
+				
+				digits[0] = 8'b00000000;
+				
 				state = 3'b000;
 			end
 			
@@ -111,12 +139,14 @@ module game(
 				LED = 16'b1111111111111111;
 			
 				//SCROLL VALUE TO CORRECT SLOT USING randNum
+				digits[randNum+4] = 8'b10000000;
 				
-				LED <= 16'b0000000000000000;
+				LED = #10000 16'b0000000000000000;
 				
-				randNum = randNum + 1;
-				guessNum = 2'b00;
-				if (randNum == 4)
+				if (guessDig != last_guessDig) //Fix problem with "button jitter" (false positives)
+                    randNum = randNum + 3'b001;
+				guessNum = 3'b001;
+				if (randNum == 3'b100)
 					state = 3'b101;
 				else
 					state = 3'b001;
@@ -136,12 +166,11 @@ module game(
 endmodule // END TOP MODULE //
 
 module convert(//Convert 4bit to Cathode compatible 8bit
-	input CLK,
 	input [3:0]val,
 	output reg [7:0]out
 	);
 	
-	always @ (posedge CLK) begin
+	always @ (val) begin
 	
 	   case (val)
 	       4'b0000 : out = 8'b11000000;
