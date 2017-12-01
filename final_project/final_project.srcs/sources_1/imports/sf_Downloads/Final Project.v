@@ -86,15 +86,14 @@ module game(
 				
 					if (guessDig == randstore[randNum])
 						state = 3'b100;
-					else
+					else if (guessDig != last_guessDig) //Fix problem with "button jitter" (false positives)
 						state = 3'b010;
 				end
 			end
 			
 			3'b010: begin //Wrong guess
 			
-			    if (guessDig != last_guessDig) //Fix problem with "button jitter" (false positives)
-			        guessNum = guessNum + 3'b001;
+			    guessNum = guessNum + 3'b001;
 				//SCROLL VALUE TO NEXT EMPTY SLOT USING guessNum//
 				digits[4-guessNum] = guess_cat;
 				
@@ -137,7 +136,7 @@ module game(
 				
 				if (guessDig != last_guessDig) //Fix problem with "button jitter" (false positives)
                     randNum = randNum + 3'b001;
-				guessNum = 3'b001;
+				guessNum = 3'b000;
 				if (randNum == 3'b100)
 					state = 3'b101;
 				else
