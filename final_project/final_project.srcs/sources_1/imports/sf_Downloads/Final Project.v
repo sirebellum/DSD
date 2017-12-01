@@ -58,17 +58,7 @@ module game(
 				if (BTNC) begin
 					state = 3'b001;
 					
-                    digits[0] = rand_cat[0];
-                    digits[1] = rand_cat[1];
-                    digits[2] = rand_cat[2];
-                    digits[3] = rand_cat[3];
-					digits[4] = 8'b11111111;
-                    digits[5] = 8'b11111111;
-                    digits[6] = 8'b11111111;
-                    digits[7] = 8'b11111111;
-
-					
-					digits[0] = #1000 8'b11111111;
+					digits[0] = 8'b11111111;
                     digits[1] = 8'b11111111;
                     digits[2] = 8'b11111111;
                     digits[3] = 8'b11111111;
@@ -110,12 +100,10 @@ module game(
 				
 				// led for higher or lower
 				if (guessDig < randstore[randNum]) begin
-					LED[0] = 1;
-					LED[15] = 0;
+					LED = 16'b0000000000000001;
 				end
 				else begin
-					LED[0] = 0;
-					LED[15] = 1;
+					LED = 16'b1000000000000000;
 				end //end higher or lower
 				
 				if (guessNum == 3'b100)
@@ -141,7 +129,11 @@ module game(
 				//SCROLL VALUE TO CORRECT SLOT USING randNum
 				digits[randNum+4] = 8'b10000000;
 				
-				LED = #10000 16'b0000000000000000;
+				//Reset guess digits
+				digits[0] = 8'b11111111;
+				digits[1] = 8'b11111111;
+				digits[2] = 8'b11111111;
+				digits[3] = 8'b11111111;
 				
 				if (guessDig != last_guessDig) //Fix problem with "button jitter" (false positives)
                     randNum = randNum + 3'b001;
