@@ -70,6 +70,7 @@ module game(
                     guessNum = 3'b000;
                     randNum = 3'b000;
                     
+                    LED = 16'b0000000000000000;
 				end
 			end
 			
