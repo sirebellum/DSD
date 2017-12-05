@@ -14,6 +14,9 @@ module game(
 	wire CLK_Slow;
 	Clock_Slow CLKSLOW(CLK_1K, CLK_Slow);
 	
+	wire CLK_Scroll;
+	Clock_Scroll(CLK, CLK_Scroll);
+	
 	wire [3:0] randgen[3:0]; //Picks up output from random generator
 	reg [3:0] randstore[3:0]; //Stores output from random generator for a session
 	random RANDOM(CLK_Slow, CLK, randgen[0], randgen[1], randgen[2], randgen[3]);
@@ -39,86 +42,144 @@ module game(
 	
 	reg [4:0] i;
 	reg [3:0] j;
+	reg [3:0] j2;
 	reg [3:0] m;
+	reg [3:0] m2;
 	
+	reg [7:0] digScroll [7:0];
+	reg [7:0] digRight [7:0];	
 	reg scrollFlag;
 	reg [31:0]counterScroll;
-    reg slowScroll, fastScroll, delayLED;
+    reg fastScroll, delayLED, scrollCorrect;
 	
     initial begin
 	state = 3'b000;
-//	slowScroll = 1'b0;
-//    fastScroll = 1'b0;
-//    delayLED = 1'b0;
-        
+  
+    scrollCorrect = 1'b0;
     scrollFlag = 1'b0;	
-	j = 4'b0000;
-	m = 4'b0000;
+	j2 = 4'b0000;
+	m2 = 4'b0000;
+	
     guessNum = 3'b000;
     randNum = 3'b000;
+    
+    digits[0] = 8'b11111111;
+    digits[1] = 8'b11111111;
+    digits[2] = 8'b11111111;
+    digits[3] = 8'b11111111;
+    digits[4] = 8'b11111111;
+    digits[5] = 8'b11111111;
+    digits[6] = 8'b11111111;
+    digits[7] = 8'b11111111;
+    
+    digRight[0] = 8'b11111111;
+    digRight[1] = 8'b11111111;
+    digRight[2] = 8'b11111111;
+    digRight[3] = 8'b11111111;
+    digRight[4] = 8'b11111111;
+    digRight[5] = 8'b11111111;
+    digRight[6] = 8'b11111111;
+    digRight[7] = 8'b11111111;
     end
+	
 	
 	always @ (posedge CLK) begin
         counterScroll <= counterScroll + 32'h00000001;
-        slowScroll <= counterScroll[31];
-        fastScroll <= counterScroll[29];
+
+        fastScroll <= counterScroll[28];
         delayLED <= counterScroll[30];
     end
     
-	always @ (posedge CLK_1K) begin
+    	always @ (posedge CLK_Slow) begin
+        if(!scrollCorrect)
+            m = 4'b0000;
+        if(scrollCorrect) begin
+            digRight[m-4'b0111] = 8'b11111111;
+            digRight[m-4'b0110] = 8'b11111111;  
+            digRight[m-4'b0101] = 8'b11111111;                        
+            digRight[m-4'b0100] = 8'b11111111;
+            digRight[m-4'b0011] = 8'b11111111;
+            digRight[m-4'b0010] = 8'b11111111;  
+            digRight[m-4'b0001] = 8'b11111111;
+
+            digRight[m]         = guess_cat;
+            
+            m = m + 4'b0001;
+        end
+    end
+    
+    
+    
+    	always @ (posedge CLK_Scroll) begin
+        if (!scrollFlag)
+            j = 4'b0000;    
+        if(scrollFlag) begin
+            
+            digScroll[j-4'b1000] = 8'b11111111;
+            digScroll[j-4'b0111] = 8'b11111111;
+            digScroll[j-4'b0110] = 8'b11111111;  
+            digScroll[j-4'b0101] = 8'b11111111;                        
+            
+            digScroll[j-4'b0100] = rand_cat[0];
+            digScroll[j-4'b0011] = rand_cat[1];
+            digScroll[j-4'b0010] = rand_cat[2];  
+            digScroll[j-4'b0001] = rand_cat[3];
+                       
+            digScroll[j]         = 8'b11111111;
+            digScroll[j+4'b0001] = 8'b11111111;
+            digScroll[j+4'b0010] = 8'b11111111;
+            digScroll[j+4'b0011] = 8'b11111111;                          
+            digScroll[j+4'b0100] = 8'b11111111;
+            digScroll[j+4'b0101] = 8'b11111111;
+            digScroll[j+4'b0110] = 8'b11111111;  
+            digScroll[j+4'b0111] = 8'b11111111;         
+            j = j + 4'b0001;
+                        
+        end
+    end
+    
+    
+	always @ (posedge CLK) begin
 		case (state)
 		
 			3'b000: begin //Initial state, wait for button, scroll and proceed once pressed
+				if(!scrollFlag) begin
 				randstore[0] = randgen[0];
 				randstore[1] = randgen[1];
 				randstore[2] = randgen[2];
 				randstore[3] = randgen[3];
+				end
 				
 				if (BTNC) begin
 					scrollFlag = 1'b1;
+					j2 = 4'b0000;
 				end
 				if (scrollFlag) begin
-					//while(scrollFlag) begin
-					//for(j = 4'b0000; j < 4'b1001; j = j + 4'b0001) begin
-					if(delayLED)  begin        //&&(j < 4'b1001)
-                        digits[j-4'b1000] = 8'b11111111;
-                        digits[j-4'b0111] = 8'b11111111;
-                        digits[j-4'b0110] = 8'b11111111;  
-                        digits[j-4'b0101] = 8'b11111111;                        
-                        digits[j-4'b0100] = 8'b11111111;
-                        digits[j-4'b0011] = 8'b11111111;
-                        digits[j-4'b0010] = 8'b11111111;  
-                        digits[j-4'b0001] = 8'b11111111;
-                        
-                        digits[j]         = rand_cat[0];
-                        digits[j+4'b0001] = rand_cat[1];
-                        digits[j+4'b0010] = rand_cat[2];
-                        digits[j+4'b0011] = rand_cat[3];               
-                        
-                        digits[j+4'b0100] = 8'b11111111;
-                        digits[j+4'b0101] = 8'b11111111;
-                        digits[j+4'b0110] = 8'b11111111;  
-                        digits[j+4'b0111] = 8'b11111111;
-                        
-                        j = j + 4'b0001; 
-                        end
-					
-					   if (j ==  4'b1001) begin
-                          j = 4'b0000;
+
+					   digits[0] = digScroll[0];
+					   digits[1] = digScroll[1];
+					   digits[2] = digScroll[2];
+					   digits[3] = digScroll[3];
+					   digits[4] = digScroll[4];
+					   digits[5] = digScroll[5];
+					   digits[6] = digScroll[6];
+					   digits[7] = digScroll[7];
+
+                       j2 = j;    
+					   if (j2 ==  4'b1101) begin
                           guessNum = 3'b000;
                           randNum = 3'b000;
                           
                           LED = 16'b0000000000000000;
                           
                           state = 3'b001;
-//						  scrollFlag = 1'b0;
-//					   end
 					end
 				end	
 			end
 			
 			3'b001: begin //Waiting for and checking player guesses
 				scrollFlag = 1'b0;
+				scrollCorrect = 1'b0;
 				last_guessDig = guessDig;
 				
 				if (BTND) begin
@@ -182,35 +243,27 @@ module game(
 				LED = 16'b1111111111111111;
 			    				
 			    //Reset guess digits
+			    if(!scrollCorrect) begin
                 digits[0] = 8'b11111111;
                 digits[1] = 8'b11111111;
                 digits[2] = 8'b11111111;
                 digits[3] = 8'b11111111;
-
-			    //scrollFlag = 1'b1;
-			    //while(scrollFlag) begin
+                end
+                scrollCorrect = 1'b1;
 				//SCROLL VALUE TO CORRECT SLOT USING randNum
 				//if ((slowScroll)&&(m < (randNum + 4'b0101))) begin
-				if (CLK_Slow) begin
-				//for(m = 4'b0100; m < (randNum + 4'b0101); m = m + 4'b0001) begin
-				digits[m-4'b0111] = 8'b11111111;
-                digits[m-4'b0110] = 8'b11111111;  
-                digits[m-4'b0101] = 8'b11111111;                        
-                digits[m-4'b0100] = 8'b11111111;
-                digits[m-4'b0011] = 8'b11111111;
-                digits[m-4'b0010] = 8'b11111111;  
-                digits[m-4'b0001] = 8'b11111111;
+				if (scrollCorrect) begin
 
-                digits[m]         = guess_cat;
-                
-                //end
-                m = m + 4'b0001;
-                
-                if(m == (randNum + 4'b0101)) begin
-                m = 4'b0000;
-                if (guessDig != last_guessDig) //Fix problem with "button jitter" (false positives)
-                    randNum = randNum + 3'b001;
-                guessNum = 3'b000;
+                digits[0] = digRight[0];
+                digits[1] = digRight[1];
+                digits[2] = digRight[2];
+                digits[3] = digRight[3];
+                digits[4] = digRight[4];
+                digits[5] = digRight[5];
+                digits[6] = digRight[6];
+                digits[7] = digRight[7];
+
+                m2 = m;
                 if (randNum == 3'b001)
                     digits[4] = rand_cat[0];
                 if (randNum == 3'b010) begin
@@ -222,6 +275,23 @@ module game(
                     digits[5] = rand_cat[1];    
                     digits[6] = rand_cat[2];
                 end    
+                
+                if(m2 == (randNum + 4'b0101)) begin
+                m2 = 4'b0000;
+                if (guessDig != last_guessDig) //Fix problem with "button jitter" (false positives)
+                    randNum = randNum + 3'b001;
+                guessNum = 3'b000;
+//                if (randNum == 3'b001)
+//                    digits[4] = rand_cat[0];
+//                if (randNum == 3'b010) begin
+//                    digits[4] = rand_cat[0];   
+//                    digits[5] = rand_cat[1];
+//                end
+//                if (randNum == 3'b011) begin
+//                    digits[4] = rand_cat[0];   
+//                    digits[5] = rand_cat[1];    
+//                    digits[6] = rand_cat[2];
+//                end    
                 if (randNum == 3'b100) begin
                     digits[4] = rand_cat[0];
                     digits[5] = rand_cat[1];   
@@ -246,6 +316,7 @@ module game(
 			
 			3'b101: begin //4 correct guesses
 				//SHOW WINNING FLASHES 1 SEC ON OFF//
+				scrollCorrect = 1'b0;
 				if (CLK_Slow)
                     LED = 16'b1111111111111111;
                 else
@@ -289,7 +360,7 @@ module convert(//Convert 4bit to Cathode compatible 8bit
               
     end
 	
-endmodule // END CONVERT MODULE //
+endmodule
 
 // RANDOM NUMBER MODULE //
 module random(
@@ -435,3 +506,25 @@ always @(posedge CLK_1k) begin
 end
 
 endmodule //END SLOW CLOCK MODULE
+
+// CLOCK SCROLL MODULE //
+module Clock_Scroll(
+    input clock,
+    output reg CLK_Scroll);
+
+        reg [31:0] counter_out, k_count;
+        initial begin
+                counter_out<= 32'h00000000;
+                k_count<= 32'h00000000;
+        end
+
+        always @(posedge clock) begin
+                counter_out<=    counter_out + 32'h00000001;
+                if(counter_out > 32'h0010FFFF)
+                begin
+                        counter_out<= 32'h00000000;
+                        CLK_Scroll <= !CLK_Scroll;
+                        end
+                end
+
+endmodule //END SCROLL CLOCK MODULE
