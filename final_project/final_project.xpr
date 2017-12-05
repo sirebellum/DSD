@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="32" Path="/home/lubuntu/gits/DSD/final_project/final_project.xpr">
+<Project Version="7" Minor="32" Path="/home/lubuntu/DSD/final_project/final_project.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="d31286f7fb0d445caed7f5843b8081ad"/>

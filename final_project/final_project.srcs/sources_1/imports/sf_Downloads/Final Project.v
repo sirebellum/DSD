@@ -38,15 +38,34 @@ module game(
 	reg [2:0] randNum;  //current random number being guessed
 	
 	reg [4:0] i;
-
+	reg [3:0] j;
+	reg [3:0] m;
+	
+	reg scrollFlag;
+	reg [31:0]counterScroll;
+    reg slowScroll, fastScroll, delayLED;
+	
     initial begin
 	state = 3'b000;
-	
+//	slowScroll = 1'b0;
+//    fastScroll = 1'b0;
+//    delayLED = 1'b0;
+        
+    scrollFlag = 1'b0;	
+	j = 4'b0000;
+	m = 4'b0000;
     guessNum = 3'b000;
     randNum = 3'b000;
     end
-    
+	
 	always @ (posedge CLK) begin
+        counterScroll <= counterScroll + 32'h00000001;
+        slowScroll <= counterScroll[31];
+        fastScroll <= counterScroll[29];
+        delayLED <= counterScroll[30];
+    end
+    
+	always @ (posedge CLK_1K) begin
 		case (state)
 		
 			3'b000: begin //Initial state, wait for button, scroll and proceed once pressed
@@ -56,26 +75,50 @@ module game(
 				randstore[3] = randgen[3];
 				
 				if (BTNC) begin
-					state = 3'b001;
-					
-					digits[0] = 8'b11111111;
-                    digits[1] = 8'b11111111;
-                    digits[2] = 8'b11111111;
-                    digits[3] = 8'b11111111;
-                    digits[4] = rand_cat[0];
-                    digits[5] = rand_cat[1];
-                    digits[6] = rand_cat[2];
-                    digits[7] = rand_cat[3];
-                    
-                    guessNum = 3'b000;
-                    randNum = 3'b000;
-                    
-                    LED = 16'b0000000000000000;
+					scrollFlag = 1'b1;
 				end
+				if (scrollFlag) begin
+					//while(scrollFlag) begin
+					//for(j = 4'b0000; j < 4'b1001; j = j + 4'b0001) begin
+					if(delayLED)  begin        //&&(j < 4'b1001)
+                        digits[j-4'b1000] = 8'b11111111;
+                        digits[j-4'b0111] = 8'b11111111;
+                        digits[j-4'b0110] = 8'b11111111;  
+                        digits[j-4'b0101] = 8'b11111111;                        
+                        digits[j-4'b0100] = 8'b11111111;
+                        digits[j-4'b0011] = 8'b11111111;
+                        digits[j-4'b0010] = 8'b11111111;  
+                        digits[j-4'b0001] = 8'b11111111;
+                        
+                        digits[j]         = rand_cat[0];
+                        digits[j+4'b0001] = rand_cat[1];
+                        digits[j+4'b0010] = rand_cat[2];
+                        digits[j+4'b0011] = rand_cat[3];               
+                        
+                        digits[j+4'b0100] = 8'b11111111;
+                        digits[j+4'b0101] = 8'b11111111;
+                        digits[j+4'b0110] = 8'b11111111;  
+                        digits[j+4'b0111] = 8'b11111111;
+                        
+                        j = j + 4'b0001; 
+                        end
+					
+					   if (j ==  4'b1001) begin
+                          j = 4'b0000;
+                          guessNum = 3'b000;
+                          randNum = 3'b000;
+                          
+                          LED = 16'b0000000000000000;
+                          
+                          state = 3'b001;
+//						  scrollFlag = 1'b0;
+//					   end
+					end
+				end	
 			end
 			
 			3'b001: begin //Waiting for and checking player guesses
-				
+				scrollFlag = 1'b0;
 				last_guessDig = guessDig;
 				
 				if (BTND) begin
@@ -105,7 +148,7 @@ module game(
 				else begin
 					LED = 16'b1000000000000000;
 				end //end higher or lower
-				
+
 				if (guessNum == 3'b100)
 					state = 3'b011;
 				else
@@ -117,36 +160,97 @@ module game(
 				//SHOW ACTUAL RANDOM NUMBERS IN LOWER 4//
 				//WAIT 3 SECONDS AND CHANGE UPPER 4 TO F000//
 				
-				digits[0] = 8'b00000000;
+                digits[4] = rand_cat[0];
+                digits[5] = rand_cat[1];
+                digits[6] = rand_cat[2];
+                digits[7] = rand_cat[3];
+            
+                // after 3 sec show F000 in upper display
+                if (delayLED) begin
+                digits[0] = 8'b10001110;
+                digits[1] = 8'b11000000;
+                digits[2] = 8'b11000000;
+                digits[3] = 8'b11000000;
+				end
 				
-				state = 3'b000;
+				if (BTNC)
+				    state = 3'b000;
 			end
 			
 			3'b100: begin //Correct guess
 
 				LED = 16'b1111111111111111;
-			
+			    				
+			    //Reset guess digits
+                digits[0] = 8'b11111111;
+                digits[1] = 8'b11111111;
+                digits[2] = 8'b11111111;
+                digits[3] = 8'b11111111;
+
+			    //scrollFlag = 1'b1;
+			    //while(scrollFlag) begin
 				//SCROLL VALUE TO CORRECT SLOT USING randNum
-				digits[randNum+4] = 8'b10000000;
-				
-				//Reset guess digits
-				digits[0] = 8'b11111111;
-				digits[1] = 8'b11111111;
-				digits[2] = 8'b11111111;
-				digits[3] = 8'b11111111;
-				
-				if (guessDig != last_guessDig) //Fix problem with "button jitter" (false positives)
+				//if ((slowScroll)&&(m < (randNum + 4'b0101))) begin
+				if (CLK_Slow) begin
+				//for(m = 4'b0100; m < (randNum + 4'b0101); m = m + 4'b0001) begin
+				digits[m-4'b0111] = 8'b11111111;
+                digits[m-4'b0110] = 8'b11111111;  
+                digits[m-4'b0101] = 8'b11111111;                        
+                digits[m-4'b0100] = 8'b11111111;
+                digits[m-4'b0011] = 8'b11111111;
+                digits[m-4'b0010] = 8'b11111111;  
+                digits[m-4'b0001] = 8'b11111111;
+
+                digits[m]         = guess_cat;
+                
+                //end
+                m = m + 4'b0001;
+                
+                if(m == (randNum + 4'b0101)) begin
+                m = 4'b0000;
+                if (guessDig != last_guessDig) //Fix problem with "button jitter" (false positives)
                     randNum = randNum + 3'b001;
-				guessNum = 3'b000;
-				if (randNum == 3'b100)
-					state = 3'b101;
-				else
-					state = 3'b001;
+                guessNum = 3'b000;
+                if (randNum == 3'b001)
+                    digits[4] = rand_cat[0];
+                if (randNum == 3'b010) begin
+                    digits[4] = rand_cat[0];   
+                    digits[5] = rand_cat[1];
+                end
+                if (randNum == 3'b011) begin
+                    digits[4] = rand_cat[0];   
+                    digits[5] = rand_cat[1];    
+                    digits[6] = rand_cat[2];
+                end    
+                if (randNum == 3'b100) begin
+                    digits[4] = rand_cat[0];
+                    digits[5] = rand_cat[1];   
+                    digits[6] = rand_cat[2];    
+                    digits[7] = rand_cat[3];
+                    state = 3'b101;
+                    end
+                else
+                    state = 3'b001;
+                end
+                
+                end
+                
+//                if (m == (randNum + 4'b0101)) begin
+//                    m = 4'b0100;
+//                    scrollFlag = 1'b0;
+//                    end
+//				end
+
+
 			end
 			
 			3'b101: begin //4 correct guesses
 				//SHOW WINNING FLASHES 1 SEC ON OFF//
-				
+				if (CLK_Slow)
+                    LED = 16'b1111111111111111;
+                else
+                    LED = 16'b0000000000000000;
+                
 				if (BTNC)
 					state = 3'b000;
 			end
@@ -185,7 +289,7 @@ module convert(//Convert 4bit to Cathode compatible 8bit
               
     end
 	
-endmodule
+endmodule // END CONVERT MODULE //
 
 // RANDOM NUMBER MODULE //
 module random(

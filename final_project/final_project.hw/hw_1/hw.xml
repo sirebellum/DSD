@@ -10,7 +10,7 @@
       <Properties Property="FULL_PROBES.FILE" value=""/>
       <Properties Property="PROBES.FILE" value=""/>
       <Properties Property="PROGRAM.HW_BITSTREAM" value="$_project_name_.runs/impl_1/game.bit"/>
-      <Properties Property="SLR.COUNT" value="/home/lubuntu/tmp/1"/>
+      <Properties Property="SLR.COUNT" value="/home/lubuntu/1"/>
     </Object>
   </ObjectList>
   <probeset name="hw project" active="false"/>
